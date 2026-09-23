@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nikhil Chary Sriramoju — Systems & AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070a; --surface:#101013; --surface2:#16161b;
+  --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.18);
+  --text:#eceae4; --muted:#8c8b88;
+  --indigo:#8c9eff; --amber:#ffb454; --green:#5fe08a; --red:#ff6b6b;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+code,.mono{font-family:'JetBrains Mono',monospace}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--indigo);color:#07070a}
+#bgcanvas{position:fixed;inset:0;z-index:0;opacity:.5}
+#spot{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(600px circle at var(--mx,50%) var(--my,20%),rgba(140,158,255,.07),transparent 60%)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;backdrop-filter:blur(14px);background:rgba(7,7,10,.65);border-bottom:1px solid var(--line)}
+.navrow{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1040px;margin:0 auto}
+.navrow .name{font-weight:500;font-size:15px;display:flex;align-items:center;gap:9px}
+.navrow .name .led{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.navrow .links{display:flex;gap:20px;font-size:14px;color:var(--muted)}
+.navrow .links a:hover{color:var(--text)}
+.kbtn{border:1px solid var(--line-strong);border-radius:8px;padding:6px 12px;font-size:13px;color:var(--muted);cursor:pointer;background:transparent;font-family:inherit;display:flex;align-items:center;gap:8px;transition:.15s}
+.kbtn:hover{border-color:var(--indigo);color:var(--text);box-shadow:0 0 0 3px rgba(140,158,255,.12)}
+.kbtn kbd{font-family:'JetBrains Mono',monospace;font-size:11px;border:1px solid var(--line-strong);border-radius:4px;padding:1px 5px}
+
+section{padding:80px 0}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+.eyebrow{color:var(--indigo);font-size:13px;margin:0 0 14px;font-family:'JetBrains Mono',monospace}
+h1{font-size:46px;line-height:1.1;font-weight:700;margin:0 0 18px;max-width:700px}
+.gradtext{background:linear-gradient(100deg,var(--text) 20%,var(--indigo) 55%,var(--text) 80%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s linear infinite}
+@keyframes sheen{to{background-position:-200% center}}
+.sub{color:var(--muted);font-size:17px;max-width:560px;margin:0 0 28px}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-strong);border-radius:999px;padding:7px 14px;font-size:13px;color:var(--muted);margin-bottom:28px;background:rgba(255,255,255,.02)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn{border-radius:9px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;border:1px solid transparent;font-family:inherit;transition:.15s}
+.btn-primary{background:var(--text);color:#07070a}
+.btn-primary:hover{background:#fff;box-shadow:0 0 24px rgba(255,255,255,.18)}
+.btn-ghost{background:transparent;border-color:var(--line-strong);color:var(--text)}
+.btn-ghost:hover{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(140,158,255,.12)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:44px}
+.stat{border:1px solid var(--line);border-radius:12px;padding:16px;background:rgba(255,255,255,.015)}
+.stat .n{font-size:26px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.stat .l{font-size:11px;color:var(--muted);margin-top:4px}
+
+h2{font-size:13px;color:var(--muted);font-weight:500;margin:0 0 22px}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cell{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;transition:.2s}
+.cell:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.cell .lbl{color:var(--muted);font-size:11px;margin-bottom:10px}
+.chip{display:inline-block;font-size:12px;font-family:'JetBrains Mono',monospace;background:var(--surface2);border:1px solid var(--line);border-radius:6px;padding:4px 9px;margin:0 6px 6px 0;color:#cfcfca}
+
+.projects{display:grid;gap:12px;perspective:1000px}
+.proj{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;cursor:pointer;transition:transform .12s,border-color .15s,box-shadow .15s;transform-style:preserve-3d}
+.proj:hover{border-color:var(--indigo);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.proj .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.proj h3{margin:0;font-size:18px;font-weight:500}
+.proj .tag{font-size:11px;color:var(--indigo);font-family:'JetBrains Mono',monospace}
+.proj p{color:var(--muted);font-size:14px;margin:8px 0 12px;max-width:640px}
+.proj .stack{display:flex;flex-wrap:wrap;gap:6px}
+.filters{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.fbtn{font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--line-strong);background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;transition:.15s}
+.fbtn.active{background:var(--text);color:#07070a;border-color:var(--text)}
+
+.status{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-bottom:1px solid var(--line)}
+.srow:last-child{border-bottom:none}
+.srow .sname{font-size:14px}
+.srow .smeta{color:var(--muted);font-size:12px;font-family:'JetBrains Mono',monospace}
+.pill{display:flex;align-items:center;gap:7px;font-size:12px;font-family:'JetBrains Mono',monospace}
+.pill .dot{width:6px;height:6px}
+.pill.up{color:var(--green)}
+.spark{display:flex;align-items:flex-end;gap:2px;height:20px;margin-left:10px}
+.spark i{width:3px;background:var(--indigo);border-radius:1px;opacity:.7}
+
+.milestones{border-left:1px solid var(--line);padding-left:22px}
+.m{position:relative;padding-bottom:26px}
+.m::before{content:'';position:absolute;left:-27px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--indigo);box-shadow:0 0 8px var(--indigo)}
+.m .when{color:var(--muted);font-size:12px;font-family:'JetBrains Mono',monospace;margin-bottom:3px}
+.m h4{margin:0 0 4px;font-size:15px;font-weight:500}
+.m p{margin:0;color:var(--muted);font-size:13px}
+
+footer{border-top:1px solid var(--line);padding:32px 0;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;position:relative;z-index:2}
+footer a:hover{color:var(--text)}
+
+.drawer-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:80;display:none;align-items:flex-end;justify-content:center}
+.drawer-bg.open{display:flex}
+.drawer{background:var(--surface);border:1px solid var(--line-strong);border-top-left-radius:16px;border-top-right-radius:16px;width:100%;max-width:640px;max-height:82vh;overflow:auto;padding:26px 24px calc(26px + env(safe-area-inset-bottom,0px));animation:up .25s ease}
+@keyframes up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+.drawer h3{margin:0 0 4px;font-size:20px}
+.drawer .tag{color:var(--indigo);font-size:12px;font-family:'JetBrains Mono',monospace}
+.drawer .close{float:right;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer}
+.drawer .sec{margin-top:18px}
+.drawer .sec h5{font-size:12px;color:var(--muted);margin:0 0 8px}
+.drawer .flow{font-family:'JetBrains Mono',monospace;font-size:12px;color:#cfcfca;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:12px;white-space:pre-wrap}
+
+.termfab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:70;width:52px;height:52px;border-radius:50%;background:var(--indigo);color:#07070a;border:none;font-size:18px;cursor:pointer;box-shadow:0 6px 24px rgba(140,158,255,.45)}
+.term-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90;display:none;align-items:center;justify-content:center;padding:16px}
+.term-bg.open{display:flex}
+.term{width:100%;max-width:620px;height:min(70vh,520px);background:#0b0b0e;border:1px solid var(--line-strong);border-radius:12px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.term-head{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.term-dot{width:9px;height:9px;border-radius:50%}
+.term-log{flex:1;overflow:auto;padding:14px;font-family:'JetBrains Mono',monospace;font-size:13px}
+.term-log .ln{margin-bottom:6px;white-space:pre-wrap;word-break:break-word}
+.term-log .prompt{color:var(--green)}
+.term-log .out{color:#cfcfca}
+.term-log .muted{color:var(--muted)}
+.term-in{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding:10px 14px}
+.term-in span{color:var(--green);font-family:'JetBrains Mono',monospace;font-size:13px}
+.term-in input{flex:1;background:none;border:none;outline:none;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px}
+
+@media(max-width:720px){
+  h1{font-size:32px}
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .navrow .links{display:none}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<canvas id="bgcanvas"></canvas>
+<div id="spot"></div>
+
+<header class="nav"><div class="navrow">
+  <div class="name"><span class="led"></span>Nikhil Chary Sriramoju</div>
+  <nav class="links"><a href="#work">Work</a><a href="#stack">Stack</a><a href="#status">Status</a><a href="#path">Path</a></nav>
+  <button class="kbtn" onclick="openTerm()"><span class="mono">&gt;_</span> terminal <kbd>⌘K</kbd></button>
+</div></header>
+
+<div class="wrap">
+
+<section id="top" style="padding-top:60px">
+  <div class="badge reveal in"><span class="dot"></span>Open for software engineer / AI engineering internships, 2027</div>
+  <p class="eyebrow reveal in">final-year b.tech cse // systems &amp; ai engineer</p>
+  <h1 class="reveal in">Builds <span class="gradtext">distributed systems</span> and ML pipelines, then ships them end to end.</h1>
+  <p class="sub reveal in">Writes a Raft consensus store from scratch as readily as a Next.js frontend — with production ML layered on top when the problem calls for it.</p>
+  <div class="ctas reveal in">
+    <button class="btn btn-primary" onclick="document.getElementById('work').scrollIntoView()">See what's shipped</button>
+    <button class="btn btn-ghost" onclick="openTerm()">Open the terminal</button>
+  </div>
+  <div class="stats reveal">
+    <div class="stat"><div class="n" data-count="15">0</div><div class="l">Raft/CRDT tests passing</div></div>
+    <div class="stat"><div class="n" data-count="839" data-div="1000">0</div><div class="l">Forgery classifier PR-AUC</div></div>
+    <div class="stat"><div class="n" data-count="18" data-suffix="K+">0</div><div class="l">Records in risk ensemble</div></div>
+    <div class="stat"><div class="n" data-count="5">0</div><div class="l">Systems shipped &amp; live</div></div>
+  </div>
+</section>
+
+<section id="stack" class="reveal">
+  <h2>Core stack</h2>
+  <div class="bento">
+    <div class="cell"><div class="lbl">Languages</div><span class="chip">Python</span><span class="chip">Java</span><span class="chip">JavaScript</span><span class="chip">C</span><span class="chip">C++</span></div>
+    <div class="cell"><div class="lbl">Backend & infra</div><span class="chip">FastAPI</span><span class="chip">Node.js</span><span class="chip">Docker</span><span class="chip">PostgreSQL</span><span class="chip">Redis</span></div>
+    <div class="cell"><div class="lbl">AI / ML</div><span class="chip">FAISS</span><span class="chip">RAG</span><span class="chip">scikit-learn</span><span class="chip">LangGraph</span></div>
+    <div class="cell"><div class="lbl">CS foundations</div><span class="chip">Distributed systems</span><span class="chip">DSA</span><span class="chip">DBMS</span></div>
+  </div>
+</section>
+
+<section id="work" class="reveal">
+  <h2>Shipped projects</h2>
+  <div class="filters" id="filters"></div>
+  <div class="projects" id="projList"></div>
+</section>
+
+<section id="status" class="reveal">
+  <h2>Deployed & live</h2>
+  <div class="status" id="statusList"></div>
+</section>
+
+<section id="path" class="reveal">
+  <h2>Experience</h2>
+  <div class="milestones">
+    <div class="m"><div class="when">Current</div><h4>Machine Learning Engineer Intern — Yuva Intern (NSDC)</h4><p>Applied ML engineering under a national skilling program.</p></div>
+    <div class="m"><div class="when">Prior</div><h4>Data Analytics & Software Engineering Intern — Thiranex</h4><p>Analytics and full-stack feature work.</p></div>
+    <div class="m"><div class="when">Simulations</div><h4>Forage virtual job simulations</h4><p>Datacom software engineering, Clifford Chance cybersecurity, Latham & Watkins data & tech transactions.</p></div>
+  </div>
+</section>
+
+</div>
+
+<footer><div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;width:100%">
+  <span>© 2026 Nikhil Chary Sriramoju</span>
+  <div style="display:flex;gap:16px">
+    <a href="https://github.com/Nikhil-creat">GitHub</a>
+    <a href="https://in.linkedin.com/in/nikhil-chary-sriramoju-95041b38a">LinkedIn</a>
+    <a href="mailto:sriramojunikhil66@gmail.com">Email</a>
+  </div>
+</div></footer>
+
+<div class="drawer-bg" id="drawerBg" onclick="if(event.target===this)closeDrawer()">
+  <div class="drawer" id="drawer"></div>
+</div>
+
+<button class="termfab" onclick="openTerm()" aria-label="Open terminal">&gt;_</button>
+<div class="term-bg" id="termBg" onclick="if(event.target===this)closeTerm()">
+  <div class="term">
+    <div class="term-head"><span class="term-dot" style="background:#ff6b6b"></span><span class="term-dot" style="background:#ffb454"></span><span class="term-dot" style="background:#5fe08a"></span>&nbsp;nikhil@portfolio — zsh</div>
+    <div class="term-log" id="termLog"></div>
+    <div class="term-in"><span>&gt;</span><input id="termInput" placeholder="type 'help'" autocomplete="off"></div>
+  </div>
+</div>
+
+<script>
+// background node-grid canvas
+const cv = document.getElementById('bgcanvas'), ctx = cv.getContext('2d');
+let W,H,nodes=[];
+function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+resize();addEventListener('resize',resize);
+for(let i=0;i<46;i++)nodes.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25});
+function tick(){
+  ctx.clearRect(0,0,W,H);
+  nodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy; if(n.x<0||n.x>W)n.vx*=-1; if(n.y<0||n.y>H)n.vy*=-1});
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+    const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+    if(d<130){ctx.strokeStyle='rgba(140,158,255,'+(0.12*(1-d/130))+')';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}
+  }
+  nodes.forEach(n=>{ctx.fillStyle='rgba(140,158,255,.5)';ctx.beginPath();ctx.arc(n.x,n.y,1.6,0,7);ctx.fill()});
+  requestAnimationFrame(tick);
+}
+tick();
+addEventListener('pointermove',e=>{document.documentElement.style.setProperty('--mx',e.clientX+'px');document.documentElement.style.setProperty('--my',e.clientY+'px')});
+
+// scroll reveal
+const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// animated counters
+const cio = new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return; cio.unobserve(e.target);
+  const el=e.target, target=+el.dataset.count, div=+el.dataset.div||1, suf=el.dataset.suffix||'';
+  let v=0; const step=Math.max(1,target/40);
+  const iv=setInterval(()=>{v=Math.min(target,v+step); el.textContent=(div>1?(v/div).toFixed(3):Math.round(v))+suf; if(v>=target)clearInterval(iv)},22);
+}),{threshold:.4});
+document.querySelectorAll('.stat .n').forEach(el=>cio.observe(el));
+
+// project tilt
+function tilt(e){
+  const r=this.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+  this.style.transform=`rotateX(${-y*4}deg) rotateY(${x*4}deg) translateY(-2px)`;
+}
+function untilt(){this.style.transform='none'}
+
+const projects = [
+  {id:'distworkspace', name:'DistWorkspace', tag:'distributed-systems', desc:'Real-time collaborative workspace: from-scratch Raft key-value store, RGA CRDT text editor, Kafka-style event broker, async TCP transport. 15/15 tests passing.', stack:['Raft','CRDT','TCP','Kafka-style broker'],
+    flow:'client\n  -> async TCP transport\n  -> Raft leader election / log replication\n  -> RGA CRDT merge (text editor)\n  -> event broker (pub/sub, Kafka-style)\n  -> replicated state across nodes'},
+  {id:'trustguard', name:'TrustGuard AI', tag:'ai-ml', desc:'Identity verification and transaction risk platform: gradient-boosting forgery classifier (PR-AUC 0.839) and an Isolation Forest anomaly ensemble across 18K+ records.', stack:['Gradient boosting','Isolation Forest','scikit-learn'],
+    flow:'transaction / document input\n  -> feature extraction\n  -> gradient-boosting classifier (forgery score)\n  -> isolation forest ensemble (anomaly score)\n  -> risk decision (18K+ records evaluated)'},
+  {id:'circleup', name:'CircleUp', tag:'full-stack', desc:'Full-stack social mobile app: real-time Socket.io chat, presigned S3 uploads, JWT auth, installable Android build via EAS.', stack:['React Native','Socket.io','S3','JWT','EAS'],
+    flow:'React Native client\n  -> JWT auth\n  -> Socket.io realtime channel (chat)\n  -> presigned S3 upload (media)\n  -> EAS build -> installable Android APK'},
+  {id:'codelint', name:'Codelint', tag:'tooling', desc:'Python AST-based static analysis tool for catching structural code issues before they ship.', stack:['Python AST','Static analysis'],
+    flow:'source file\n  -> Python AST parse\n  -> rule pass over nodes\n  -> flagged issues + suggestions'},
+  {id:'pdfrag', name:'AI PDF Chatbot', tag:'ai-ml', desc:'RAG pipeline over PDFs using local sentence-transformer embeddings and a FAISS vector index — no external embedding API required.', stack:['FAISS','Sentence-transformers','RAG'],
+    flow:'PDF -> chunk & embed (local sentence-transformers)\n  -> FAISS vector index\n  -> query -> nearest chunks retrieved\n  -> grounded answer generation'},
+];
+const cats = ['all', ...new Set(projects.map(p=>p.tag))];
+const filtersEl = document.getElementById('filters');
+let active='all';
+function renderFilters(){
+  filtersEl.innerHTML = cats.map(c=>`<button class="fbtn ${c===active?'active':''}" data-c="${c}">${c.replace('-',' ')}</button>`).join('');
+  filtersEl.querySelectorAll('.fbtn').forEach(b=>b.onclick=()=>{active=b.dataset.c;renderFilters();renderProjects()});
+}
+function renderProjects(highlightId){
+  const list = projects.filter(p=>active==='all'||p.tag===active);
+  document.getElementById('projList').innerHTML = list.map(p=>`
+    <div class="proj" id="p-${p.id}" onclick="openDrawer('${p.id}')" style="${highlightId===p.id?'border-color:var(--indigo)':''}">
+      <div class="top"><h3>${p.name}</h3><span class="tag">${p.tag}</span></div>
+      <p>${p.desc}</p>
+      <div class="stack">${p.stack.map(s=>`<span class="chip">${s}</span>`).join('')}</div>
+    </div>`).join('');
+  document.querySelectorAll('.proj').forEach(el=>{el.addEventListener('pointermove',tilt);el.addEventListener('pointerleave',untilt)});
+}
+renderFilters(); renderProjects();
+
+function openDrawer(id){
+  const p = projects.find(x=>x.id===id);
+  document.getElementById('drawer').innerHTML = `
+    <button class="close" onclick="closeDrawer()" aria-label="Close">×</button>
+    <span class="tag">${p.tag}</span>
+    <h3>${p.name}</h3>
+    <p style="color:var(--muted);font-size:14px;margin:6px 0 0">${p.desc}</p>
+    <div class="sec"><h5>Stack</h5><div class="stack">${p.stack.map(s=>`<span class="chip">${s}</span>`).join('')}</div></div>
+    <div class="sec"><h5>Data flow</h5><div class="flow">${p.flow}</div></div>
+    <div class="sec"><a href="https://github.com/Nikhil-creat" style="font-size:13px;color:var(--indigo)">View on GitHub →</a></div>`;
+  document.getElementById('drawerBg').classList.add('open');
+}
+function closeDrawer(){document.getElementById('drawerBg').classList.remove('open')}
+
+const services = [
+  {name:'CircleUp API',host:'Render',status:'up',latency:'118ms'},
+  {name:'Codelint',host:'Vercel',status:'up',latency:'64ms'},
+  {name:'TrustGuard AI',host:'inference endpoint',status:'up',latency:'99.9% uptime'},
+];
+document.getElementById('statusList').innerHTML = services.map(s=>{
+  const bars = Array.from({length:14},()=>Math.round(6+Math.random()*14)).map(h=>`<i style="height:${h}px"></i>`).join('');
+  return `<div class="srow"><div><div class="sname">${s.name}</div><div class="smeta">${s.host}</div></div>
+  <div style="display:flex;align-items:center"><div class="pill up"><span class="dot"></span>operational · ${s.latency}</div><div class="spark">${bars}</div></div></div>`;
+}).join('');
+
+const log = document.getElementById('termLog');
+const input = document.getElementById('termInput');
+function print(html,cls){const d=document.createElement('div');d.className='ln '+(cls||'out');d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight}
+function greet(){log.innerHTML='';print("Digital twin shell — rule-based command router (no live model wired up here).",'muted');print("type <b>help</b> to see what it can do.",'muted')}
+const commands = {
+  help: ()=>"commands: help, projects, skills, resume, distributed, ai, contact, ping --distributed, clear",
+  projects: ()=>{active='all';renderFilters();renderProjects();closeTerm();document.getElementById('work').scrollIntoView();return "-> scrolled to projects"},
+  skills: ()=>{closeTerm();document.getElementById('stack').scrollIntoView();return "-> scrolled to stack"},
+  distributed: ()=>{active='distributed-systems';renderFilters();renderProjects('distworkspace');closeTerm();document.getElementById('work').scrollIntoView();return "-> filtered to distributed systems: DistWorkspace"},
+  ai: ()=>{active='ai-ml';renderFilters();renderProjects();closeTerm();document.getElementById('work').scrollIntoView();return "-> filtered to AI / ML projects"},
+  resume: ()=>"cat resume.json\n{\n  \"role\": \"Full-Stack & Systems/AI Engineer\",\n  \"education\": \"B.Tech CSE, final year\",\n  \"open_to\": \"SWE / AI internships, 2027\"\n}",
+  contact: ()=>"email: sriramojunikhil66@gmail.com · github.com/Nikhil-creat",
+  clear: ()=>{greet();return null}
+};
+function run(raw){
+  const cmd = raw.trim();
+  if(!cmd) return;
+  print('<span class="prompt">&gt;</span> '+cmd);
+  if(cmd.startsWith('ping')){print('64 bytes from raft-node-1: time=4ms\n64 bytes from raft-node-2: time=6ms\nleader elected: node-1');return}
+  if(cmd==='cat resume.json'){print(commands.resume());return}
+  const fn = commands[cmd];
+  if(fn){const out=fn(); if(out) print(out)}
+  else print("command not found — type 'help'",'muted');
+}
+input.addEventListener('keydown',e=>{if(e.key==='Enter'){run(input.value);input.value=''}});
+function openTerm(){document.getElementById('termBg').classList.add('open'); if(!log.innerHTML) greet(); setTimeout(()=>input.focus(),50)}
+function closeTerm(){document.getElementById('termBg').classList.remove('open')}
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();document.getElementById('termBg').classList.contains('open')?closeTerm():openTerm()}
+  if(e.key==='Escape'){closeTerm();closeDrawer()}
+});
+</script>
+</body>
+</html>
